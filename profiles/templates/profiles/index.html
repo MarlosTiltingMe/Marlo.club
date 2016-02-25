@@ -1,0 +1,31 @@
+{% include 'profiles/header.html' %}
+{% if all_posts %}
+{% if was_created %}
+<h3><a href="/board/">Don't see your post? Click me!</a></h3>
+{% endif %}
+{% for title in all_posts %}
+<div id="container">
+  <div class="media">
+    <div class="media-left">
+      <a href="/board/threads/{{title}}">
+        {% if title.img %}
+        <img id="thumbnail" class="media-object" src="{{title.img}}">
+        {% else %}
+        <img id="thumbnail" class="media-object" src="https://image.freepik.com/free-icon/log-file-format_318-45052.jpg">
+        {% endif %}
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{title}}</h4>
+      {{title.body_text}}
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h1>No posts, man.</h1>
+{% endif %}
+<div class="postbit">
+  <a href="/board/post/img"><button id="pst" type="submit" class="btn btn-primary">Post Image</button></a>
+  <a href="/board/post/text"><button id="pst" type="submit" class="btn btn-primary">Post Logs</button></a>
+</div>

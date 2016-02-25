@@ -1,0 +1,16 @@
+{% include 'profiles/header.html' %}
+{% if was_posted %}
+<h3><a href="/board/">Don't see your post? Click me!</a></h3>
+<meta http-equiv="refresh" content="0;url=/board/">
+{% else %}
+<form action="{% url 'profiles:postText' %}" method="POST">
+  <div class="container" id="toPost">
+    {% csrf_token %}
+    <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
+    <input class="form-control" type="text" name="author" id="author" placeholder="Your Name">
+    <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Context"></textarea>
+    <textarea class="form-control" rows="8" cols="50" name="logs" id="logs" placeholder="Chat Logs"></textarea>
+    <input class="btn" type="submit" value="Post">
+  </div>
+</form>
+{% endif %}

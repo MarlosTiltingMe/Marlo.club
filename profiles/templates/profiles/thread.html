@@ -1,0 +1,20 @@
+{% include 'profiles/header.html' %}
+{% for title in thread %}
+<div class="post-container">
+  <div class="panel panel-default" id="post">
+    <div class="panel-heading" id="xd">
+      <h3 class="panel-title">{{title}} - {{title.author}}</h3>
+    </div>
+    <div class="panel-body">
+      <p style="padding:5px;">{{title.body_text}}</p>
+      {% if title.img %}
+      <a href="{{title.img}}">
+        <img style="max-width:100%; float: left; margin:10px;" class="grow" src="{{title.img}}">
+      </a>
+      {% else %}
+      <pre>{{title.log_text}}</pre>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endfor %}

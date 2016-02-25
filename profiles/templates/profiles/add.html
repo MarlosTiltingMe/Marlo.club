@@ -1,0 +1,11 @@
+<h1>Add your Profile</h1>
+<h2>
+  {{ was_created }}
+</h2>
+<form action="{% url 'profiles:add' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="name" id="name" placeholder="Keyboard Name & Model"/>
+  <input type="text" name="reddit" id="reddit" placeholder="Reddit uname"/>
+  <input type="text" name="picture" id="picture" placeholder="Picture URL"/>
+  <input type ="submit" value="Add"/>
+</form>
