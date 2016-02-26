@@ -66,9 +66,13 @@ def registerUser(request):
         uname_input = pk=request.POST['name']
         email_input = pk=request.POST['email']
         password_input = pk=request.POST['password']
-        user = User.objects.create_user(uname_input, email_input, password_input)
-        user.save()
-        return render(request, 'profiles/register.html', {'was_registered': 'Thanks for your registration!', 'name': request.user})
+        if not User.objects.filter(username = uname_input).exists():
+            if not User.objects.filter(email = email_input).exists():
+                user = User.objects.create_user(uname_input, email_input, password_input)
+                user.save()
+                return render(request, 'profiles/register.html', {'was_registered': 'Thanks for your registration!', 'name': request.user})
+            return render(request, 'profiles/register.html', {'was_registered': 'That E-Mail already exists.'})
+        return render(request, 'profiles/register.html', {'was_registered': 'That name is taken'})
 
 def signin(request):
     if not request.user.is_authenticated():
