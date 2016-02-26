@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
-from .models import Posts
+from .models import Posts, Comments
 # Create your views here.
 
 def post(request):
@@ -48,9 +48,19 @@ def posts(request):
     return HttpResponse(template.render(context, request))
 
 def thread(request, thread_name):
-    get_thread = Posts.objects.filter(title_text=thread_name)
-    return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user})
-
+    if request.method == "GET":
+        get_thread = Posts.objects.filter(title_text=thread_name)
+        get_comments = Comments.objects.filter(parent_thread=get_thread)
+        return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment':get_thread[0]})
+    elif request.method == "POST" and request.user.is_authenticated():
+        comment_text = request.POST['new_comment']
+        get_thread = Posts.objects.filter(title_text=thread_name)
+        get_comments = Comments.objects.filter(parent_thread=get_thread)
+        a = Comments(comment_text=comment_text, author=request.user, parent_thread=get_thread[0])
+        a.save()
+        return render(request, "profiles/thread.html", {'thread': get_thread, 'name': request.user, 'comments':get_comments, 'p_comment': get_thread[0]})
+    else:
+        return render(request, "profiles/thread.html", {'thread': get_thread, 'name': request.user, 'comments':get_comments, 'p_comment': get_thread[0]})
 
 #User stuff
 def register(request):
