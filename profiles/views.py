@@ -56,7 +56,10 @@ def thread(request, thread_name):
 
 #User stuff
 def register(request):
-    return render(request, 'profiles/register.html')
+    if request.user.is_authenticated():
+        return render(request, 'profiles/index.html', {'name': request.user})
+    else:
+        return render(request, 'profiles/register.html')
 
 def registerUser(request):
     if request.method == "GET":
