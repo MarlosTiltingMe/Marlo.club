@@ -8,8 +8,6 @@ from django.conf import settings
 from .models import Posts
 # Create your views here.
 
-
-
 def post(request):
     if not request.user.is_authenticated():
         return render(request, 'profiles/login.html')

@@ -11,6 +11,10 @@ function empty() {
         alert("Give me an image! If you don't have one, maybe you should be posting Logs instead?");
         return false;
     };
+    if(document.getElementById("title").value == "") {
+      alert("You need to set a title!");
+      return false;
+    }
 }
 </script>
 <form action="{% url 'profiles:post' %}" method="POST">

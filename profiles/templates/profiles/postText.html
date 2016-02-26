@@ -3,6 +3,12 @@
 <h3><a href="/board/">Don't see your post? Click me!</a></h3>
 <meta http-equiv="refresh" content="0;url=/board/">
 {% else %}
+<script>
+if(document.getElementById("title").value == "") {
+  alert("You need to set a title!");
+  return false;
+}
+</script>
 <form action="{% url 'profiles:postText' %}" method="POST">
   <div class="container" id="toPost">
     {% csrf_token %}
