@@ -9,6 +9,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <div id="nav" class="nav navbar-default">
   <a class="navbar-brand" href="/board">Slack stuff</a>
+  <ul class="nav navbar-nav navbar-left">
+    <li><a href="/board/members/">Members</a></li>
+  </ul>
   {% if name.is_authenticated %}
   <ul style="padding-right:10px;" class="nav navbar-nav navbar-right">
     <li><a href="#">{{name}}</a></li>
