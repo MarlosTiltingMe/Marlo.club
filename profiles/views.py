@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
-from .models import Name, Posts
+from .models import Posts
 # Create your views here.
 
 
