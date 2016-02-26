@@ -1,0 +1,11 @@
+{% include 'profiles/header.html' %}
+<div style="" class="container" align="center">
+  <div class="panel panel-default">
+    <div class="panel-heading">Member's List</div>
+    <table class="table">
+      {% for User in members %}
+      <tr><td>{{User}}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>

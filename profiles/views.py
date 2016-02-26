@@ -95,3 +95,11 @@ def loginUser(request):
 def logout_view(request):
     logout(request)
     return render(request, 'profiles/index.html')
+
+def member_view(request):
+    member_list = User.objects.all()
+    context = {
+        'members': member_list,
+        'name': request.user,
+    }
+    return render(request, 'profiles/members.html', context)

@@ -4,9 +4,11 @@
 <meta http-equiv="refresh" content="0;url=/board/">
 {% else %}
 <script>
-if(document.getElementById("title").value == "") {
-  alert("You need to set a title!");
-  return false;
+function empty() {
+  if(document.getElementById("title").value == "") {
+    alert("You need to set a title!");
+    return false;
+  }
 }
 </script>
 <form action="{% url 'profiles:postText' %}" method="POST">
@@ -15,7 +17,7 @@ if(document.getElementById("title").value == "") {
     <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
     <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Context"></textarea>
     <textarea class="form-control" rows="8" cols="50" name="logs" id="logs" placeholder="Chat Logs"></textarea>
-    <input class="btn" type="submit" value="Post">
+    <input class="btn" onClick="return empty()" type="submit" value="Post">
   </div>
 </form>
 {% endif %}
