@@ -10,4 +10,13 @@
 
 <div id="nav" class="nav navbar-default">
   <a class="navbar-brand" href="/board">Slack stuff</a>
+  {% if name.is_authenticated %}
+  <ul style="padding-right:10px;" class="nav navbar-nav navbar-right">
+    <li><a href="#">{{name}}</a></li>
+  </ul>
+  {% else %}
+  <ul style="padding-right:10px;" class="nav navbar-nav navbar-right">
+    <li><a href="/board/login/">Login</a></li>
+  </ul>
+  {% endif %}
 </div>
