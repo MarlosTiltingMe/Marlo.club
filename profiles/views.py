@@ -55,7 +55,7 @@ def thread(request, thread_name):
 #User stuff
 def register(request):
     if request.user.is_authenticated():
-        return render(request, 'profiles/index.html', {'name': request.user})
+        return render(request, 'profiles/index.html', {'name': request.user, 'all_posts': Posts.objects.all()})
     else:
         return render(request, 'profiles/register.html')
 
@@ -98,7 +98,7 @@ def loginUser(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, 'profiles/index.html')
+    return render(request, 'profiles/index.html', {'all_posts': Posts.objects.all()})
 
 def member_view(request):
     member_list = User.objects.all()
