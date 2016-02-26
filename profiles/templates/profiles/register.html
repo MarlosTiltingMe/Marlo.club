@@ -1,0 +1,14 @@
+{% include 'profiles/header.html' %}
+{% if was_registered %}
+<center><h1>{{was_registered}}</h1></center>
+{% else %}
+<form action="{% url 'profiles:registerUser' %}" method="POST">
+  <div class="container" id="toPost">
+    {% csrf_token %}
+    <input class="form-control" type="text" name="name" id="name" placeholder="Name">
+    <input class="form-control" type="text" name="email" id="email" placeholder="E-Mail">
+    <input class="form-control" type="text" name="password" id="password" placeholder="Password">
+    <input class="btn" type="submit" value="Register">
+  </div>
+</form>
+{% endif %}

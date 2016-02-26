@@ -1,0 +1,13 @@
+{% include 'profiles/header.html' %}
+{% if was_logged %}
+<center><h1>{{was_logged}}</h1></center>
+{% else %}
+<form action="{% url 'profiles:loginUser' %}" method="POST">
+  <div class="container" id="toPost">
+    {% csrf_token %}
+    <input class="form-control" type="text" name="username" id="username" placeholder="Username">
+    <input class="form-control" type="text" name="password" id="password" placeholder="Password">
+    <input class="btn" type="submit" value="Login">
+  </div>
+</form>
+{% endif %}
