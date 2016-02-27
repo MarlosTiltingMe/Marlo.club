@@ -16,7 +16,7 @@ def post(request):
             return render(request, 'profiles/post.html', {'name': request.user})
         elif request.method == "POST":
             title_input = pk=request.POST['title']
-            author_input = request.user
+            author_input = pk=request.POST['author']
             body_input = pk=request.POST['body']
             img_input = pk=request.POST['img']
             obj = Posts(title_text=title_input, author=author_input, body_text=body_input, img=img_input)
@@ -28,10 +28,10 @@ def postText(request):
         return render(request, 'profiles/login.html')
     else:
         if request.method == "GET":
-            return render(request, 'profiles/postText.html')
+            return render(request, 'profiles/postText.html', {'name': request.user})
         elif request.method == "POST":
             title_input = pk=request.POST['title']
-            author_input = request.user
+            author_input = pk=request.POST['author']
             body_input = pk=request.POST['body']
             logs_input = pk=request.POST['logs']
             obj = Posts(title_text=title_input, author=author_input, body_text=body_input, log_text=logs_input)

@@ -17,12 +17,13 @@ function empty() {
     }
 }
 </script>
-<form action="{% url 'profiles:post' %}" method="POST">
+<form action="/board/post/img/" method="POST">
   <div class="container" id="toPost">
     {% csrf_token %}
     <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
     <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Body.."></textarea>
     <input class="form-control" type="text" name="img" id="img" placeholder="Image url">
+    <input class="form-control" type="text" name="author" id="author" readonly value="{{name}}">
     <input class="btn" onClick="return empty()" type="submit" value="Post">
   </div>
 </form>
