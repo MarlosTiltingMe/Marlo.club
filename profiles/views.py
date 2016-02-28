@@ -55,8 +55,7 @@ def thread(request, thread_name):
     if request.method == "GET":
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
-        get_member = Members.objects.filter(member_name=request.user)
-        return render(request, 'profiles/thread.html', {'member': get_member[0],'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment':get_thread[0]})
+        return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment':get_thread[0]})
     elif request.method == "POST" and request.user.is_authenticated():
         comment_text = request.POST['new_comment']
         get_thread = Posts.objects.filter(title_text=thread_name)

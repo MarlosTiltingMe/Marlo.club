@@ -36,7 +36,6 @@
     {% for comment in comments %}
     <div class="panel panel-default">
       <div class="panel-heading"><a href="/board/members/{{comment.author}}">{{comment.author}}</a></div>
-      <img height="64px" width="64px" src="{{member}}">
       {{comment}}
     </div>
   {% endfor %}
