@@ -5,6 +5,7 @@ app_name = 'profiles'
 urlpatterns = [
     url(r'^$', views.posts, name='posts'),
     url(r'^members/$', views.member_view, name='member_view'),
+    url(r'^members/(?P<member_name>.*)/$', views.member, name='member'),
     url(r'^post/img/$', views.post, name='post'),
     url(r'^post/text/$', views.postText, name='postText'),
     url(r'^threads/(?P<thread_name>.*)/$', views.thread, name='thread'),

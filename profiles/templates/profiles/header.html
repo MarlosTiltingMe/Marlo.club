@@ -10,16 +10,21 @@
 
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
   <div id="nav" class="nav navbar-default">
     <a class="navbar-brand" href="/board">Marlo</a>
     <ul class="nav navbar-nav navbar-left">
       <li><a href="/board/members/">Members</a></li>
       {% if name.is_authenticated %}
-        <li><a href="#">{{name}}</a></li>
+        <li><a href="/board/members/{{name}}">{{name}}</a></li>
       {% else %}
       <li><a href="/board/login/">Login</a></li>
       <li><a href="/board/register/">Register</a></li>
       {% endif %}
     </ul>
   </div>
-</head>
+  {% block content %}
+  {% endblock %}
+</body>
+</html>

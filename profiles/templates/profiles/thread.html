@@ -1,41 +1,44 @@
-{% include 'profiles/header.html' %}
-{% for title in thread %}
-<script>
-function empty() {
-  if(document.getElementById("new_comment").value == "") {
-    alert("Don't go around posting nothing. That's rude.");
-    return false;
+{% extends 'profiles/header.html' %}
+{% block content %}
+  {% for title in thread %}
+  <script>
+  function empty() {
+    if(document.getElementById("new_comment").value == "") {
+      alert("Don't go around posting nothing. That's rude.");
+      return false;
+    }
   }
-}
-</script>
-<div class="post-container">
-  <div class="panel panel-default" id="post">
-    <div class="panel-heading" id="xd">
-      <h3 class="panel-title">{{title}} - {{title.author}}</h3>
+  </script>
+  <div class="post-container">
+    <div class="panel panel-default" id="post">
+      <div class="panel-heading" id="xd">
+        <h3 class="panel-title">{{title}} - {{title.author}}</h3>
+      </div>
+      <div class="panel-body">
+        <p style="padding:5px;">{{title.body_text}}</p>
+        {% if title.img %}
+        <a href="{{title.img}}">
+          <img style="max-width:100%; float: left; margin:10px;" class="grow" src="{{title.img}}">
+        </a>
+        {% else %}
+        <pre>{{title.log_text}}</pre>
+        {% endif %}
+      </div>
     </div>
-    <div class="panel-body">
-      <p style="padding:5px;">{{title.body_text}}</p>
-      {% if title.img %}
-      <a href="{{title.img}}">
-        <img style="max-width:100%; float: left; margin:10px;" class="grow" src="{{title.img}}">
-      </a>
-      {% else %}
-      <pre>{{title.log_text}}</pre>
-      {% endif %}
+    {% endfor %}
+    {% if name.is_authenticated %}
+    <form action="/board/threads/{{p_comment.title_text}}/" method="POST">
+      {% csrf_token %}
+      <textarea class="form-control" name="new_comment" id="new_comment" rows="4" cols="8"></textarea>
+      <input class="btn" onClick="return empty()" type="submit" value="Comment">
+    </form>
+    {% endif %}
+    {% for comment in comments %}
+    <div class="panel panel-default">
+      <div class="panel-heading"><a href="/board/members/{{comment.author}}">{{comment.author}}</a></div>
+      <img height="64px" width="64px" src="{{member}}">
+      {{comment}}
     </div>
-  </div>
   {% endfor %}
-  {% if name.is_authenticated %}
-  <form action="/board/threads/{{p_comment.title_text}}/" method="POST">
-    {% csrf_token %}
-    <textarea class="form-control" name="new_comment" id="new_comment" rows="4" cols="8"></textarea>
-    <input class="btn" onClick="return empty()" type="submit" value="Comment">
-  </form>
-  {% endif %}
-  {% for comment in comments %}
-  <div class="panel panel-default">
-    <div class="panel-heading">{{comment.author}}</div>
-    {{comment}}
   </div>
-{% endfor %}
-</div>
+{% endblock %}

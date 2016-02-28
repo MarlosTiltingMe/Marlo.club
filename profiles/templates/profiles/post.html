@@ -1,30 +1,32 @@
-{% include 'profiles/header.html' %}
-{% if was_posted %}
-<h3><a href="/board/">Don't see your post? Click me!</a></h3>
-<meta http-equiv="refresh" content="0;url=/board/">
-{% else %}
-<script>
-function empty() {
-    var x;
-    x = document.getElementById("img").value;
-    if (x == "") {
-        alert("Give me an image! If you don't have one, maybe you should be posting Logs instead?");
+{% extends 'profiles/header.html' %}
+{% block content %}
+  {% if was_posted %}
+  <h3><a href="/board/">Don't see your post? Click me!</a></h3>
+  <meta http-equiv="refresh" content="0;url=/board/">
+  {% else %}
+  <script>
+  function empty() {
+      var x;
+      x = document.getElementById("img").value;
+      if (x == "") {
+          alert("Give me an image! If you don't have one, maybe you should be posting Logs instead?");
+          return false;
+      };
+      if(document.getElementById("title").value == "") {
+        alert("You need to set a title!");
         return false;
-    };
-    if(document.getElementById("title").value == "") {
-      alert("You need to set a title!");
-      return false;
-    }
-}
-</script>
-<form action="/board/post/img/" method="POST">
-  <div class="container" id="toPost">
-    {% csrf_token %}
-    <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
-    <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Body.."></textarea>
-    <input class="form-control" type="text" name="img" id="img" placeholder="Image url">
-    <input class="form-control" type="text" name="author" id="author" readonly value="{{name}}">
-    <input class="btn" onClick="return empty()" type="submit" value="Post">
-  </div>
-</form>
-{% endif %}
+      }
+  }
+  </script>
+  <form action="/board/post/img/" method="POST">
+    <div class="container" id="toPost">
+      {% csrf_token %}
+      <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
+      <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Body.."></textarea>
+      <input class="form-control" type="text" name="img" id="img" placeholder="Image url">
+      <input class="form-control" type="text" name="author" id="author" readonly value="{{name}}">
+      <input class="btn" onClick="return empty()" type="submit" value="Post">
+    </div>
+  </form>
+  {% endif %}
+{% endblock %}

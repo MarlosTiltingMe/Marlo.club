@@ -17,3 +17,10 @@ class Comments(models.Model):
     author = models.CharField(max_length=30, default='Anon')
     def __str__(self):
         return self.comment_text
+
+class Members(models.Model):
+    member_name = models.CharField(max_length=30, default='Noname')
+    img = models.CharField(max_length=1024, default='http://i.imgur.com/y6nAFKz.jpg')
+    desc_text = models.CharField(max_length=200, default='No description :(')
+    def __str__(self):
+        return self.img

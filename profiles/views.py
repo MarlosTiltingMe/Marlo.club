@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
-from .models import Posts, Comments
+from .models import Posts, Comments, Members
 # Create your views here.
 
 def post(request):
@@ -47,11 +47,16 @@ def posts(request):
     }
     return HttpResponse(template.render(context, request))
 
+def member(request, member_name):
+    get_member = Members.objects.filter(member_name=member_name)
+    return render(request, 'profiles/profile.html', {'member': get_member[0], 'name': request.user})
+
 def thread(request, thread_name):
     if request.method == "GET":
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
-        return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment':get_thread[0]})
+        get_member = Members.objects.filter(member_name=request.user)
+        return render(request, 'profiles/thread.html', {'member': get_member[0],'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment':get_thread[0]})
     elif request.method == "POST" and request.user.is_authenticated():
         comment_text = request.POST['new_comment']
         get_thread = Posts.objects.filter(title_text=thread_name)
@@ -79,7 +84,9 @@ def registerUser(request):
         if not User.objects.filter(username = uname_input).exists():
             if not User.objects.filter(email = email_input).exists():
                 user = User.objects.create_user(uname_input, email_input, password_input)
+                member = Members(member_name=uname_input)
                 user.save()
+                member.save()
                 return render(request, 'profiles/register.html', {'was_registered': 'Thanks for your registration!', 'name': request.user})
             return render(request, 'profiles/register.html', {'was_registered': 'That E-Mail already exists.'})
         return render(request, 'profiles/register.html', {'was_registered': 'That name is taken'})

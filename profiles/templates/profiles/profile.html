@@ -1,0 +1,12 @@
+{% extends 'profiles/header.html' %}
+{% block content %}
+  <div class="post-container">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{member.member_name}}</div>
+      <div class="panel-body">
+        <img style="height:128px; width:128px;" class="thumbnail grow" src="{{member}}">
+        {{member.desc_text}}
+      </div>
+    </div>
+  </div>
+{% endblock %}
