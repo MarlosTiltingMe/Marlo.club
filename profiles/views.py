@@ -86,9 +86,9 @@ def registerUser(request):
                 member = Members(member_name=uname_input)
                 user.save()
                 member.save()
-                return render(request, 'profiles/register.html', {'was_registered': 'Thanks for your registration!', 'name': request.user})
-            return render(request, 'profiles/register.html', {'was_registered': 'That E-Mail already exists.'})
-        return render(request, 'profiles/register.html', {'was_registered': 'That name is taken'})
+                return render(request, 'profiles/register.html', {'failed': False, 'was_registered': True, 'name': request.user})
+            return render(request, 'profiles/register.html', {'failed': True, 'was_registered': False})
+        return render(request, 'profiles/register.html', {'failed': True, 'was_registered': False})
 
 def signin(request):
     if not request.user.is_authenticated():
@@ -106,11 +106,11 @@ def loginUser(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'profiles/login.html', {'was_logged': 'Thanks for logging in!', 'name': request.user})
+                return render(request, 'profiles/login.html', {'was_logged': True, 'name': request.user})
             else:
-                return render(request, 'profiles/login.html', {'was_logged': 'You\'ve been banned.', 'name': request.user})
+                return render(request, 'profiles/login.html', {'failed': True, 'was_logged': False, 'name': request.user})
         else:
-            return render(request, 'profiles/login.html', {'was_logged': 'That, my friend, is an incorrect login.', 'name': request.user})
+            return render(request, 'profiles/login.html', {'failed': True, 'was_logged': False, 'name': request.user})
 
 def logout_view(request):
     logout(request)

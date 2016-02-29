@@ -1,7 +1,17 @@
 {% extends 'profiles/header.html' %}
 {% block content %}
   {% if was_registered %}
-  <center><h1>{{was_registered}}</h1></center>
+  <center><h1>You may now login.</h1></center>
+  <meta http-equiv="refresh" content="0; url=/board/login/" />
+  {% else %}
+  {% if failed %}
+  <div class="container">
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      Your account was not made. It is possible the email or name is already taken.
+    </div>
+  </div>
   {% else %}
   <form action="{% url 'profiles:registerUser' %}" method="POST">
     <div class="container" id="toPost">
@@ -12,5 +22,6 @@
       <input class="btn" type="submit" value="Register">
     </div>
   </form>
+  {% endif %}
   {% endif %}
 {% endblock %}
