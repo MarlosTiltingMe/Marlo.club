@@ -1,12 +1,30 @@
 {% extends 'profiles/header.html' %}
 {% block content %}
+{% if is_self %}
   <div class="post-container">
     <div class="panel panel-default">
-      <div class="panel-heading">{{member.member_name}}</div>
+      <div class="panel-heading">{{member}}</div>
       <div class="panel-body">
-        <img style="height:128px; width:128px;" class="thumbnail grow" src="{{member}}">
-        {{member.desc_text}}
+        <img style="height:128px; width:128px;" class="thumbnail grow" src="{{member.get_image}}">
+        {{member.get_desc}}
+      </div>
+      <form action="/board/members/{{member}}/" method="POST">
+        {% csrf_token %}
+        <input style="margin-left:4px; width:50%;" name="avatar" id="avatar" type="text" class="form-control" placeholder="Avatar URL" value="{{member.avatar}}">
+        <input style="margin-left:4px; width:50%;" name="desc" id="desc" type="text" class="form-control" placeholder="Short description" value="{{member.description}}">
+        <input style="margin-left:4px;" class="btn btn-primary" onClick="return empty()" type="submit" value="Save">
+      </form>
+    </div>
+  </div>
+{% else %}
+  <div class="post-container">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{member}}</div>
+      <div class="panel-body">
+        <img style="height:128px; width:128px;" class="thumbnail grow" src="{{member.get_image}}">
+        {{member.get_desc}}
       </div>
     </div>
   </div>
+{% endif %}
 {% endblock %}

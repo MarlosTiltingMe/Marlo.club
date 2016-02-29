@@ -3,10 +3,12 @@ from django.template import loader
 from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.conf import settings
-from .models import Posts, Comments, Members
+from .models import Posts, Comments, UserAccount
 # Create your views here.
+
+User = get_user_model()
 
 def post(request):
     if not request.user.is_authenticated():
@@ -48,20 +50,38 @@ def posts(request):
     return HttpResponse(template.render(context, request))
 
 def member(request, member_name):
-    get_member = Members.objects.filter(member_name=member_name)
-    return render(request, 'profiles/profile.html', {'member': get_member[0], 'name': request.user})
+    if request.method == "GET":
+        get_member = User.objects.filter(username=member_name)
+        if get_member[0] == request.user:
+            return render(request, 'profiles/profile.html', {'member': get_member[0], 'name': request.user, 'is_self': True})
+        return render(request, 'profiles/profile.html', {'member': get_member[0], 'name': request.user})
+    elif request.method == "POST":
+        if User.objects.filter(username=member_name)[0] == request.user:
+            avatar_input = request.POST['avatar']
+            desc_input = request.POST['desc']
+
+            profile_update = User.objects.filter(username=request.user)[0]
+            profile_update.avatar = avatar_input
+            profile_update.description = desc_input
+            profile_update.save()
+            return render(request, 'profiles/profile.html', {'member': User.objects.filter(username=member_name)[0], 'name': request.user, 'is_self': True})
+        else:
+            #nope
+            print('no')
 
 def thread(request, thread_name):
     if request.method == "GET":
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
-        return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment':get_thread[0]})
+        return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment': get_thread[0]})
     elif request.method == "POST" and request.user.is_authenticated():
         comment_text = request.POST['new_comment']
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
+
         a = Comments(comment_text=comment_text, author=request.user, parent_thread=get_thread[0])
         a.save()
+
         return render(request, "profiles/thread.html", {'thread': get_thread, 'name': request.user, 'comments':get_comments, 'p_comment': get_thread[0]})
     else:
         return render(request, "profiles/thread.html", {'thread': get_thread, 'name': request.user, 'comments':get_comments, 'p_comment': get_thread[0]})
@@ -82,10 +102,8 @@ def registerUser(request):
         password_input = pk=request.POST['password']
         if not User.objects.filter(username = uname_input).exists():
             if not User.objects.filter(email = email_input).exists():
-                user = User.objects.create_user(uname_input, email_input, password_input)
-                member = Members(member_name=uname_input)
+                user = User.objects.create_user(email_input, uname_input, password_input)
                 user.save()
-                member.save()
                 return render(request, 'profiles/register.html', {'failed': False, 'was_registered': True, 'name': request.user})
             return render(request, 'profiles/register.html', {'failed': True, 'was_registered': False})
         return render(request, 'profiles/register.html', {'failed': True, 'was_registered': False})
@@ -123,3 +141,7 @@ def member_view(request):
         'name': request.user,
     }
     return render(request, 'profiles/members.html', context)
+
+def avatar_view(request, member_name):
+    get_avatar = User.objects.filter(username=member_name)
+    return render(request, 'profiles/data/avatar.html', {'avatar': get_avatar[0].avatar})

@@ -33,9 +33,11 @@
       <input class="btn" onClick="return empty()" type="submit" value="Comment">
     </form>
     {% endif %}
+
     {% for comment in comments %}
     <div class="panel panel-default">
       <div class="panel-heading"><a href="/board/members/{{comment.author}}">{{comment.author}}</a></div>
+      <iframe src="/data/avatar/{{comment.author}}" name="avi" width="64" marginwidth="0" height="64" marginheight="0" align="top" scrolling="No" frameborder="0" hspace="0" vspace="0">Browser not compatible. </iframe>
       {{comment}}
     </div>
   {% endfor %}
