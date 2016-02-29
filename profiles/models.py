@@ -25,7 +25,7 @@ class UserAccountManager(BaseUserManager):
 class UserAccount(AbstractBaseUser):
     email = models.EmailField(unique=True, blank=False)
     username = models.CharField(max_length=16, unique=True, blank=False)
-    avatar = models.CharField(max_length=1024, unique=False, blank=False, default='https://www.codeleakers.com/images/styles/TheBeaconDark/style/logo.png')
+    avatar = models.CharField(max_length=1024, unique=False, blank=False, default='http://imgcp.aacdn.jp/img-a/auto/auto/global-aaj-front/article/2015/12/567e7867bf57d_567e785d7742b_1319131272.JPG')
     description = models.CharField(max_length=2028, unique=False, blank=False, default='No description available.')
     is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'username'
