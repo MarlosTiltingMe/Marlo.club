@@ -5,7 +5,8 @@
       <div class="panel-heading">Member's List</div>
       <table class="table">
         {% for User in members %}
-        <tr><td><a href="/board/members/{{User}}">{{User}}</a></td></tr>
+        <tr><td><a href="/board/members/{{User}}">
+          <img style="padding-right:5px;" height="64" width="64" src="{{User.avatar}}">{{User}}</a></td></tr>
         {% endfor %}
       </table>
     </div>
