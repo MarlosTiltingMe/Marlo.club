@@ -19,7 +19,7 @@
          <img src="{{title.author.avatar}}">
          <p>Posts:{{title.author.count}}</p>
          <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
-         <pre style="width:75%; margin-top:1%;">{{title.body_text}}</pre>
+         <pre style="width:75%; margin-top:0.5%;">{{title.body_text}}</pre>
        </div>
         {% if title.log_text %}
           <pre>{{title.log_text}}</pre>
@@ -31,7 +31,7 @@
             <img src="{{comment.author.avatar}}">
             <p>Posts:{{comment.author.count}}</p>
             <p>Joined:{{comment.author.created_at|date:'n/j/y'}}</p>
-            <pre style="width:75%; margin-top:1%;">{{comment}}</pre>
+            <pre style="width:75%; margin-top:0.5%;">{{comment}}</pre>
           </div>
         {% endfor %}
 
