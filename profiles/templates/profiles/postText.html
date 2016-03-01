@@ -10,6 +10,10 @@
       alert("You need to set a title!");
       return false;
     }
+    if(document.getElementById("logs").value =="") {
+      alert("Post logs, please.");
+      return false;
+    }
   }
   </script>
   <form action="{% url 'profiles:postText' %}" method="POST">
@@ -17,7 +21,7 @@
       {% csrf_token %}
       <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
       <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Context"></textarea>
-      <textarea class="form-control" rows="8" cols="50" name="logs" id="logs" placeholder="Chat Logs" value="No logs given."></textarea>
+      <textarea class="form-control" rows="8" cols="50" name="logs" id="logs" placeholder="Chat Logs"></textarea>
       <input class="form-control" type="text" name="author" id="author" readonly value="{{name}}">
       <input class="btn" onClick="return empty()" type="submit" value="Post">
     </div>
