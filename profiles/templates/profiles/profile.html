@@ -6,7 +6,8 @@
       <div class="panel-heading">{{member}}</div>
       <div class="panel-body">
         <img style="height:128px; width:128px;" class="thumbnail grow" src="{{member.get_image}}">
-        {{member.get_desc}}
+        <h3>Post Count:{{member.count}}</h3>
+        <pre>{{member.get_desc}}</pre>
       </div>
       <form action="/board/members/{{member}}/" method="POST">
         {% csrf_token %}
@@ -19,10 +20,11 @@
 {% else %}
   <div class="post-container">
     <div class="panel panel-default">
-      <div class="panel-heading">{{member}}</div>
+      <div class="panel-heading">{{member}} - Posts:{{member.get_count}}</div>
       <div class="panel-body">
         <img style="height:128px; width:128px;" class="thumbnail grow" src="{{member.get_image}}">
-        {{member.get_desc}}
+        <h3>Post Count:{{member.count}}</h3>
+        <pre>{{member.get_desc}}</pre>
       </div>
     </div>
   </div>

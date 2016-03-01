@@ -22,6 +22,9 @@ def post(request):
             body_input = pk=request.POST['body']
             img_input = pk=request.POST['img']
             obj = Posts(title_text=title_input, author=author_input, body_text=body_input, img=img_input)
+            increment_count = User.objects.filter(username=request.user)[0]
+            increment_count.count = increment_count.count + 1
+            increment_count.save()
             obj.save()
             return render(request, 'profiles/post.html', {'was_posted': 'Thanks for your post!', 'name': request.user})
 
@@ -37,6 +40,9 @@ def postText(request):
             body_input = pk=request.POST['body']
             logs_input = pk=request.POST['logs']
             obj = Posts(title_text=title_input, author=author_input, body_text=body_input, log_text=logs_input)
+            increment_count = User.objects.filter(username=request.user)[0]
+            increment_count.count = increment_count.count + 1
+            increment_count.save()
             obj.save()
             return render(request, 'profiles/postText.html', {'was_posted': 'Thanks for your post!', 'name': request.user})
 
@@ -79,8 +85,11 @@ def thread(request, thread_name):
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
 
-        a = Comments(comment_text=comment_text, author=request.user, parent_thread=get_thread[0])
-        a.save()
+        new_comment = Comments(comment_text=comment_text, author=request.user, parent_thread=get_thread[0])
+        increment_count = User.objects.filter(username=request.user)[0]
+        increment_count.count = increment_count.count + 1
+        increment_count.save()
+        new_comment.save()
 
         return render(request, "profiles/thread.html", {'thread': get_thread, 'name': request.user, 'comments':get_comments, 'p_comment': get_thread[0]})
     else:

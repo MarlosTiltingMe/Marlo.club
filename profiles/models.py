@@ -28,11 +28,13 @@ class UserAccount(AbstractBaseUser):
     avatar = models.CharField(max_length=1024, unique=False, blank=False, default='http://imgcp.aacdn.jp/img-a/auto/auto/global-aaj-front/article/2015/12/567e7867bf57d_567e785d7742b_1319131272.JPG')
     description = models.CharField(max_length=2028, unique=False, blank=False, default='No description available.')
     is_admin = models.BooleanField(default=False)
-
+    count = models.IntegerField()
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
     objects = UserAccountManager()
+    def get_count(self):
+	    return self.count
     def __str__(self):
 	    return self.username
     def get_image(self):
