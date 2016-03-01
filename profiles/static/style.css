@@ -26,32 +26,14 @@
   height:100%;
   width:100%;
 }
-.prof-image {
-  position:relative;
-  width:100%;
-}
 #thumbnail {
   width:64px;
   height:64px;
-}
-h2 {
-  position:absolute;
-  top:200px;
-  left:16%;
-  width:100%;
 }
 .postbit {
   position:fixed;
   bottom:0;
   width:100%;
-}
-h2 span {
-   color: white;
-   font: bold 24px/45px Helvetica, Sans-Serif;
-   letter-spacing: -1px;
-   background: rgb(0, 0, 0); /* fallback color */
-   background: rgba(0, 0, 0, 0.7);
-   padding: 10px;
 }
 #nav{
   -webkit-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.25);
@@ -70,6 +52,10 @@ h2 span {
 }
 .form-control {
   margin-bottom:5px;
+}
+#image {
+  width:250px;
+  height:250px;
 }
 pre {
   font-family: "Courier New"
