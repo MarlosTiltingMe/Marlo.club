@@ -12,30 +12,21 @@
   <div class="post-container">
     <div class="panel panel-default" id="post">
       <div class="panel-heading" id="xd">
-        <h3 class="panel-title">{{title}} - <a href="/members/{{title.author}}">{{title.author}}</a></h3>
+        <h3 class="panel-title">{{title}}</h3>
       </div>
-      <div class="panel-body">
-        <p style="padding:5px;">{{title.body_text}}</p>
-        {% if title.img %}
-        <a href="{{title.img}}">
-          <img style="max-width:100%; float: left; margin:10px;" class="grow" src="{{title.img}}">
-        </a>
-        {% endif %}
+      <h4 style="padding-left:5px;"><a href="/members/{{comment.author}}">{{title.author}}</a></h4>
+      <div style="border: solid 3px #ccc;" class="postbit">
+         <img src="{{title.author.avatar}}">
+         <p>Posts:{{title.author.count}}</p>
+         <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
+         <pre style="width:75%; margin-top:5px;">{{title.body_text}}</pre>
+       </div>
         {% if title.log_text %}
           <pre>{{title.log_text}}</pre>
         {% endif %}
-        <hr>
-        <h4><a href="/members/{{title.author}}">{{title.author}}</a></h4>
-        <div class="postbit">
-           <img src="{{title.author.avatar}}">
-           <p>Posts:{{title.author.count}}</p>
-           <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
-           <pre style="width:75%; margin-top:5px;">{{title.author.description}}</pre>
-         </div>
 
          {% for comment in comments %}
-         <hr>
-         <h4><a href="/members/{{comment.author}}">{{comment.author}}</a></h4>
+         <h4 style="padding-left:5px;"><a href="/members/{{comment.author}}">{{comment.author}}</a></h4>
          <div class="postbit">
             <img src="{{comment.author.avatar}}">
             <p>Posts:{{comment.author.count}}</p>
@@ -45,7 +36,6 @@
         {% endfor %}
 
       </div>
-    </div>
     {% endfor %}
     {% if name.is_authenticated %}
     <form action="/board/threads/{{p_comment.title_text}}/" method="POST">
@@ -55,4 +45,5 @@
     </form>
     {% endif %}
   </div>
+</div>
 {% endblock %}
