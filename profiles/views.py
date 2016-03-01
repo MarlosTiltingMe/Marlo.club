@@ -40,12 +40,15 @@ def postText(request):
             author_input = pk=request.POST['author']
             body_input = pk=request.POST['body']
             logs_input = pk=request.POST['logs']
-            obj = Posts(title_text=title_input, author=author_input, body_text=body_input, log_text=logs_input)
-            increment_count = User.objects.filter(username=request.user)[0]
-            increment_count.count = increment_count.count + 1
-            increment_count.save()
-            obj.save()
-            return render(request, 'profiles/postText.html', {'was_posted': 'Thanks for your post!', 'name': request.user})
+            if isinstance(title_input, str) and isinstance(body_input, str):
+                obj = Posts(title_text=title_input, author=author_input, body_text=body_input, log_text=logs_input)
+                increment_count = User.objects.filter(username=request.user)[0]
+                increment_count.count = increment_count.count + 1
+                increment_count.save()
+                obj.save()
+                return render(request, 'profiles/postText.html', {'was_posted': 'Thanks for your post!', 'name': request.user})
+            else:
+                return render(request, 'profiles/index.html', {'name': request.user})
 
 def posts(request):
     latest_post_list = Posts.objects.all()
