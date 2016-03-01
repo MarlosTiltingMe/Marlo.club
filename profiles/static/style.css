@@ -71,3 +71,4 @@ pre {
   background-color:#ccc;
   border:1px solid black;
 }
+.postbit pre { padding-bottom:5px; }
