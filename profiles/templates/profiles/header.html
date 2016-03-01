@@ -20,6 +20,7 @@
       <li><a href="/board/members/">Members</a></li>
       {% if name.is_authenticated %}
         <li><a href="/board/members/{{name}}">{{name}}</a></li>
+        <li><a href="/logout">Logout</a></li>
       {% else %}
       <li><a href="/board/login/">Login</a></li>
       <li><a href="/board/register/">Register</a></li>
