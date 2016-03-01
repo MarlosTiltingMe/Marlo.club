@@ -7,11 +7,13 @@
   <script>
   function empty() {
       var x;
-      x = document.getElementById("img").value;
-      if (x == "") {
-          alert("Give me an image! If you don't have one, maybe you should be posting Logs instead?");
-          return false;
-      };
+      x = document.getElementById("img");
+      if (x.value == "") {
+        x.className = "no-input";
+      }
+      if(document.getElementById("logs").value == "") {
+        document.getElementById("logs").className = "no-input";
+      }
       if(document.getElementById("title").value == "") {
         alert("You need to set a title!");
         return false;
@@ -23,9 +25,11 @@
       {% csrf_token %}
       <input class="form-control" type="text" name="title" id="title" placeholder="Post Title..">
       <textarea class="form-control" rows="8" cols="100" name="body" id="body" placeholder="Body.."></textarea>
-      <input class="form-control" type="text" name="img" id="img" placeholder="Image url">
+      <input class="form-control collapse extra" type="text" name="img" id="img" placeholder="Image url">
+      <textarea class="form-control collapse extra" ros="8" cols="100" type="text" name ="logs" id="logs" placeholder="For Chat logs, code, etc."></textarea>
       <input class="form-control" type="text" name="author" id="author" readonly value="{{name}}">
-      <input class="btn" onClick="return empty()" type="submit" value="Post">
+      <input class="btn btn-success" type="button" data-toggle="collapse" data-target=".extra" value="Extras">
+      <input class="btn btn-primary" onClick="return empty()" type="submit" value="Post">
     </div>
   </form>
   {% endif %}

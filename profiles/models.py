@@ -61,10 +61,11 @@ class UserAccount(AbstractBaseUser):
 
 class Posts(models.Model):
     title_text = models.CharField(max_length=72, primary_key=True)
-    author = models.CharField(max_length=30)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    author = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     body_text = models.CharField(max_length=2048)
     img = models.CharField(max_length=1024)
-    log_text = models.CharField(max_length=9000, default="No logs available.")
+    log_text = models.CharField(max_length=9000)
     def __str__(self):
         return self.title_text
 

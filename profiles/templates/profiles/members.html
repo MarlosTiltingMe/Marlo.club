@@ -1,14 +1,28 @@
 {% extends 'profiles/header.html' %}
 {% block content %}
-  <div style="" class="container" align="center">
-    <div class="panel panel-default">
-      <div class="panel-heading">Member's List</div>
-      <table class="table">
+<div style="width:40%;" class="container">
+  <div class="panel panel-default">
+  <div class="panel-heading">Member's List</div>
+  <table class=table>
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Posts</th>
+              <th>Joined</th>
+          </tr>
+      </thead>
+      <tbody>
         {% for User in members %}
-        <tr><td><a href="/board/members/{{User}}">
-          <img style="padding-right:5px;" height="64" width="64" src="{{User.avatar}}">{{User}}</a></td></tr>
-        {% endfor %}
-      </table>
-    </div>
+            <tr>
+                <td>{{forloop.counter}}
+                <td><a href="/members/{{User}}">{{User}}</a></td>
+                <td>{{User.count}}</td>
+                <td>{{User.created_at|date:'M d, Y'}}</td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
   </div>
+</div>
 {% endblock %}

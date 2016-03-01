@@ -18,37 +18,26 @@ def post(request):
         if request.method == "GET":
             return render(request, 'profiles/post.html', {'name': request.user})
         elif request.method == "POST":
-            title_input = pk=request.POST['title']
-            author_input = pk=request.POST['author']
-            body_input = pk=request.POST['body']
-            img_input = pk=request.POST['img']
-            obj = Posts(title_text=title_input, author=author_input, body_text=body_input, img=img_input)
+            title_input = request.POST['title']
+            author_input = User.objects.filter(username=request.POST['author'])[0]
+            body_input = request.POST['body']
+            if request.POST['img']:
+                img_input = request.POST['img']
+                obj = Posts(title_text=title_input, author=author_input, body_text=body_input, img=img_input)
+            else:
+                obj = Posts(title_text=title_input, author=author_input, body_text=body_input)
+            if request.POST['logs']:
+                log_input = request.POST['logs']
+                obj = Posts(title_text=title_input, author=author_input, body_text=body_input, log_text=log_input)
+            elif request.POST['img']:
+                obj = Posts(title_text=title_input, author=author_input, body_text=body_input, img=img_input)
+            else:
+                obj = Posts(title_text=title_input, author=author_input, body_text=body_input)
             increment_count = User.objects.filter(username=request.user)[0]
             increment_count.count = increment_count.count + 1
             increment_count.save()
             obj.save()
             return render(request, 'profiles/post.html', {'was_posted': 'Thanks for your post!', 'name': request.user})
-
-def postText(request):
-    if not request.user.is_authenticated():
-        return render(request, 'profiles/login.html')
-    else:
-        if request.method == "GET":
-            return render(request, 'profiles/postText.html', {'name': request.user})
-        elif request.method == "POST":
-            title_input = pk=request.POST['title']
-            author_input = pk=request.POST['author']
-            body_input = pk=request.POST['body']
-            logs_input = pk=request.POST['logs']
-            if isinstance(title_input, str) and isinstance(body_input, str):
-                obj = Posts(title_text=title_input, author=author_input, body_text=body_input, log_text=logs_input)
-                increment_count = User.objects.filter(username=request.user)[0]
-                increment_count.count = increment_count.count + 1
-                increment_count.save()
-                obj.save()
-                return render(request, 'profiles/postText.html', {'was_posted': 'Thanks for your post!', 'name': request.user})
-            else:
-                return render(request, 'profiles/index.html', {'name': request.user})
 
 def posts(request):
     latest_post_list = Posts.objects.all()
@@ -83,7 +72,7 @@ def thread(request, thread_name):
     if request.method == "GET":
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
-        return render(request, 'profiles/thread.html', {'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment': get_thread[0]})
+        return render(request, 'profiles/thread.html', {'user': User, 'thread': get_thread, 'name': request.user, 'comments': get_comments, 'p_comment': get_thread[0]})
     elif request.method == "POST" and request.user.is_authenticated():
         comment_text = request.POST['new_comment']
         get_thread = Posts.objects.filter(title_text=thread_name)
@@ -110,9 +99,9 @@ def registerUser(request):
     if request.method == "GET":
         return render(request, 'profiles/index.html', {'name': request.user})
     elif request.method == "POST":
-        uname_input = pk=request.POST['name']
-        email_input = pk=request.POST['email']
-        password_input = pk=request.POST['password']
+        uname_input = request.POST['name']
+        email_input = request.POST['email']
+        password_input = request.POST['password']
         if not User.objects.filter(username = uname_input).exists():
             if not User.objects.filter(email = email_input).exists():
                 user = User.objects.create_user(email_input, uname_input, password_input)

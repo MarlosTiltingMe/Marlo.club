@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^members/$', views.member_view, name='member_view'),
     url(r'^members/(?P<member_name>.*)/$', views.member, name='member'),
     url(r'^post/img/$', views.post, name='post'),
-    url(r'^post/text/$', views.postText, name='postText'),
     url(r'^threads/(?P<thread_name>.*)/$', views.thread, name='thread'),
     url(r'^registerUser/$', views.registerUser, name='registerUser'),
     url(r'^register/$', views.register, name='register'),
