@@ -29,7 +29,7 @@ class UserAccount(AbstractBaseUser):
     avatar = models.CharField(max_length=1024, unique=False, blank=False, default='http://imgcp.aacdn.jp/img-a/auto/auto/global-aaj-front/article/2015/12/567e7867bf57d_567e785d7742b_1319131272.JPG')
     description = models.CharField(max_length=2028, unique=False, blank=False, default='No description available.')
     is_admin = models.BooleanField(default=False)
-    count = models.IntegerField(null=True)
+    count = models.IntegerField(null=True, default=0)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
