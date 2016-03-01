@@ -5,6 +5,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.conf import settings
+from django.utils import timezone
 from .models import Posts, Comments, UserAccount
 # Create your views here.
 
@@ -59,8 +60,8 @@ def member(request, member_name):
     if request.method == "GET":
         get_member = User.objects.filter(username=member_name)
         if get_member[0] == request.user:
-            return render(request, 'profiles/profile.html', {'member': get_member[0], 'name': request.user, 'is_self': True})
-        return render(request, 'profiles/profile.html', {'member': get_member[0], 'name': request.user})
+            return render(request, 'profiles/profile.html', {'user': User, 'member': get_member[0], 'name': request.user, 'is_self': True})
+        return render(request, 'profiles/profile.html', {'user': User, 'member': get_member[0], 'name': request.user})
     elif request.method == "POST":
         if User.objects.filter(username=member_name)[0] == request.user:
             avatar_input = request.POST['avatar']
@@ -112,6 +113,9 @@ def registerUser(request):
         if not User.objects.filter(username = uname_input).exists():
             if not User.objects.filter(email = email_input).exists():
                 user = User.objects.create_user(email_input, uname_input, password_input)
+                time_made = User.objects.filter(username=uname_input)[0]
+                time_made.created_at = timezone.now()
+                time_made.save()
                 user.save()
                 return render(request, 'profiles/register.html', {'failed': False, 'was_registered': True, 'name': request.user})
             return render(request, 'profiles/register.html', {'failed': True, 'was_registered': False})

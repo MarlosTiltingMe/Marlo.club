@@ -25,14 +25,17 @@ class UserAccountManager(BaseUserManager):
 class UserAccount(AbstractBaseUser):
     email = models.EmailField(unique=True, blank=False)
     username = models.CharField(max_length=16, unique=True, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
     avatar = models.CharField(max_length=1024, unique=False, blank=False, default='http://imgcp.aacdn.jp/img-a/auto/auto/global-aaj-front/article/2015/12/567e7867bf57d_567e785d7742b_1319131272.JPG')
     description = models.CharField(max_length=2028, unique=False, blank=False, default='No description available.')
     is_admin = models.BooleanField(default=False)
-    count = models.IntegerField()
+    count = models.IntegerField(null=True)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
     objects = UserAccountManager()
+    def get_date(self):
+	    return self.created_at
     def get_count(self):
 	    return self.count
     def __str__(self):
