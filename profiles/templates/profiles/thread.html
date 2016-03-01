@@ -25,12 +25,12 @@
           <pre>{{title.log_text}}</pre>
         {% endif %}
         <hr>
+        <h4>{{title.author}}</h4>
         <div class="postbit">
-          <iframe src="/data/avatar/{{title.author}}" name="avi" width="64" marginwidth="0" height="64" marginheight="0" align="top" scrolling="No"
-           frameborder="0" hspace="0" vspace="0">Browser not compatible. </iframe>
-           <h4>{{title.author}}</h4>
+           <img src="{{title.author.avatar}}">
            <p>Posts:{{title.author.count}}</p>
            <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
+           <pre style="width:75%; margin-top:5px;">{{title.author.description}}</pre>
          </div>
       </div>
     </div>

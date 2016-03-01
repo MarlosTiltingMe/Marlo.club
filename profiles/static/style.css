@@ -32,15 +32,16 @@
 }
 .postbit {
   margin: auto;
-  border:solid 1px black;
+  border:solid 1px #ccc;
+  height:8%;
 }
-.postbit iframe{
+.postbit img{
+  height:100%;
+  width:10%;
   float:left;
+  padding-right:5px;
 }
 .postbit p{
-  margin-bottom:-5px;
-}
-.postbit h4{
   margin-bottom:-5px;
 }
 #nav{
