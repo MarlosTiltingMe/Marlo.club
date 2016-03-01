@@ -9,15 +9,15 @@ class UserAccountManager(BaseUserManager):
 		if not username:
 			raise ValueError('Users must have a valid username')
 		user = self.model(
-			email=self.normalize_email(email),
+			email=email,
 			username=username,
 		)
 		user.set_password(password)
 		user.save()
 		return user
 
-	def create_superuser(self, email, password, **kwargs):
-		user = self.create_user(email, password, **kwargs)
+	def create_superuser(self, email, username, password):
+		user = self.create_user(email, username, password)
 		user.is_admin = True
 		user.save()
 		return user
@@ -28,29 +28,32 @@ class UserAccount(AbstractBaseUser):
     avatar = models.CharField(max_length=1024, unique=False, blank=False, default='http://imgcp.aacdn.jp/img-a/auto/auto/global-aaj-front/article/2015/12/567e7867bf57d_567e785d7742b_1319131272.JPG')
     description = models.CharField(max_length=2028, unique=False, blank=False, default='No description available.')
     is_admin = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
+
     objects = UserAccountManager()
     def __str__(self):
-        return self.username
-	def get_name(self):
-		return self.username
+	    return self.username
     def get_image(self):
-        return self.avatar
+	    return self.avatar
     def get_desc(self):
-        return self.description
-	@property
-	def is_staff(self):
-		return self.is_superuser
+	    return self.description
+    def get_full_name(self):
+	    return self.full_name
+    def get_short_name(self):
+	    print('a')
+    @property
+    def is_superuser(self):
+	    return self.is_admin
+    @property
+    def is_staff(self):
+	    return self.is_admin
+    def has_perm(self, obj=None):
+	    return self.is_admin
+    def has_module_perms(self, app_label):
+	    return self.is_admin
 
-	def has_perm(self, obj=None):
-		return self.is_admin
-
-	def has_perms(self, obj=None):
-		return self.is_admin
-
-	def has_module_perms(self, app_label):
-		return self.is_admin
 class Posts(models.Model):
     title_text = models.CharField(max_length=72, primary_key=True)
     author = models.CharField(max_length=30)
