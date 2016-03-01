@@ -32,6 +32,18 @@
            <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
            <pre style="width:75%; margin-top:5px;">{{title.author.description}}</pre>
          </div>
+
+         {% for comment in comments %}
+         <hr>
+         <h4><a href="/members/{{comment.author}}">{{comment.author}}</a></h4>
+         <div class="postbit">
+            <img src="{{comment.author.avatar}}">
+            <p>Posts:{{comment.author.count}}</p>
+            <p>Joined:{{comment.author.created_at|date:'n/j/y'}}</p>
+            <pre style="width:75%; margin-top:5px;">{{comment}}</pre>
+          </div>
+        {% endfor %}
+
       </div>
     </div>
     {% endfor %}
@@ -42,13 +54,5 @@
       <input class="btn" onClick="return empty()" type="submit" value="Comment">
     </form>
     {% endif %}
-
-    {% for comment in comments %}
-    <div class="panel panel-default">
-      <div class="panel-heading"><a href="/board/members/{{comment.author}}">{{comment.author}}</a></div>
-      <iframe src="/data/avatar/{{comment.author}}" name="avi" width="64" marginwidth="0" height="64" marginheight="0" align="top" scrolling="No" frameborder="0" hspace="0" vspace="0">Browser not compatible. </iframe>
-      {{comment}}
-    </div>
-  {% endfor %}
   </div>
 {% endblock %}

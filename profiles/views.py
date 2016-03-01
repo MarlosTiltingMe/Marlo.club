@@ -77,8 +77,8 @@ def thread(request, thread_name):
         comment_text = request.POST['new_comment']
         get_thread = Posts.objects.filter(title_text=thread_name)
         get_comments = Comments.objects.filter(parent_thread=get_thread)
-
-        new_comment = Comments(comment_text=comment_text, author=request.user, parent_thread=get_thread[0])
+        comment_author = User.objects.filter(username=request.user)[0]
+        new_comment = Comments(comment_text=comment_text, author=comment_author, parent_thread=get_thread[0])
         increment_count = User.objects.filter(username=request.user)[0]
         increment_count.count = increment_count.count + 1
         increment_count.save()

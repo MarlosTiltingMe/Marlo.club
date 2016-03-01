@@ -63,7 +63,7 @@ class Posts(models.Model):
     title_text = models.CharField(max_length=72, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     author = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    body_text = models.CharField(max_length=2048)
+    body_text = models.TextField(null=True)
     img = models.CharField(max_length=1024)
     log_text = models.CharField(max_length=9000)
     def __str__(self):
@@ -71,9 +71,8 @@ class Posts(models.Model):
 
 class Comments(models.Model):
 	parent_thread = models.ForeignKey(Posts, on_delete=models.CASCADE)
-	comment_text = models.CharField(max_length=1024)
-	author = models.CharField(max_length=30, default='Anon')
-	image = models.ForeignKey(UserAccount, on_delete=models.CASCADE, default=None, null=True, blank=True)
+	comment_text = models.TextField(null=True)
+	author = models.ForeignKey(UserAccount, on_delete=models.CASCADE, null=True, max_length=30)
 	def __str__(self):
 		return self.comment_text
 	def get_image(self):
