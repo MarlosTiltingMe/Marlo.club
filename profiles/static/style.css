@@ -36,6 +36,7 @@
 }
 .postbit #avatar{
   width:10%;
+  max-height:15%;
   float:left;
   padding-right:5px;
 }
