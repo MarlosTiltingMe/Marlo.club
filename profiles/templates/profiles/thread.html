@@ -16,15 +16,18 @@
       </div>
       <h4 style="padding-left:5px;"><a href="/members/{{title.author}}">{{title.author}}</a></h4>
       <div style="border: solid 3px #ccc;" class="postbit">
-         <img src="{{title.author.avatar}}">
+         <img id="avatar" src="{{title.author.avatar}}">
          <p>Posts:{{title.author.count}}</p>
          <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
-         <pre style="width:75%; margin-top:0.5%;">{{title.body_text}}</pre>
+         <pre style="width:75%; margin-top:0.5%;">{{title.body_text}}
+           {% if title.img %}
+            <a href="{{title.img}}"><img style="max-width:640px; max-height:640px;" class="grow" src="{{title.img}}" title="Click for full size!"></a>
+          {% endif %}
+        </pre>
        </div>
         {% if title.log_text %}
           <pre>{{title.log_text}}</pre>
         {% endif %}
-
          {% for comment in comments %}
          <h4 style="padding-left:5px;"><a href="/members/{{comment.author}}">{{comment.author}}</a></h4>
          <div class="postbit">

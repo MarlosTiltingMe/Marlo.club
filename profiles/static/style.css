@@ -34,7 +34,7 @@
   margin: auto;
   border:solid 1px #ccc;
 }
-.postbit img{
+.postbit #avatar{
   width:10%;
   float:left;
   padding-right:5px;
