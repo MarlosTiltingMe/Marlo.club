@@ -14,7 +14,7 @@
       <div class="panel-heading" id="xd">
         <h3 class="panel-title">{{title}}</h3>
       </div>
-      <h4 style="padding-left:5px;"><a href="/members/{{comment.author}}">{{title.author}}</a></h4>
+      <h4 style="padding-left:5px;"><a href="/members/{{title.author}}">{{title.author}}</a></h4>
       <div style="border: solid 3px #ccc;" class="postbit">
          <img src="{{title.author.avatar}}">
          <p>Posts:{{title.author.count}}</p>
@@ -34,16 +34,17 @@
             <pre style="width:75%; margin-top:0.5%;">{{comment}}</pre>
           </div>
         {% endfor %}
-
       </div>
+    </div>
     {% endfor %}
     {% if name.is_authenticated %}
-    <form action="/board/threads/{{p_comment.title_text}}/" method="POST">
-      {% csrf_token %}
-      <textarea class="form-control" name="new_comment" id="new_comment" rows="4" cols="8"></textarea>
-      <input class="btn btn-primary" onClick="return empty()" type="submit" value="Comment">
-    </form>
+    <div class="post-container">
+      <form action="/board/threads/{{p_comment.title_text}}/" method="POST">
+        {% csrf_token %}
+        <textarea class="form-control" name="new_comment" id="new_comment" rows="4" cols="8"></textarea>
+        <input class="btn btn-primary" onClick="return empty()" type="submit" value="Comment">
+      </form>
+    </div>
     {% endif %}
-  </div>
 </div>
 {% endblock %}
