@@ -16,7 +16,9 @@
       </div>
       <h4 style="padding-left:5px;"><a href="/members/{{title.author}}">{{title.author}}</a></h4>
       <div style="border: solid 3px #ccc;" class="postbit">
+        <div id="userbit">
          <img id="avatar" src="{{title.author.avatar}}">
+       </div>
          <p>Posts:{{title.author.count}}</p>
          <p>Joined:{{title.author.created_at|date:'n/j/y'}}</p>
          <pre style="width:75%; margin-top:0.5%;">{{title.body_text}}
